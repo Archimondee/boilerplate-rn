@@ -1,14 +1,7 @@
 /* eslint-disable import/no-default-export */
 
 import React from "react";
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  useColorScheme,
-  View,
-  Text,
-} from "react-native";
+import { SafeAreaView, StatusBar, useColorScheme, Text } from "react-native";
 
 const App = () => {
   const isDarkMode = useColorScheme() === "dark";
