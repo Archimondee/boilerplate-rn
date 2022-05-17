@@ -8,7 +8,12 @@ const App = () => {
 
   return (
     <SafeAreaView
-      style={{ flex: 1, justifyContent: "center", alignContent: "center" }}
+      style={{
+        flex: 1,
+        justifyContent: "center",
+        alignContent: "center",
+        alignItems: "center",
+      }}
     >
       <StatusBar barStyle={isDarkMode ? "light-content" : "dark-content"} />
       <Text>Hellooo</Text>
