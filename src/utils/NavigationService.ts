@@ -1,7 +1,6 @@
 import { createRef } from "react";
 import { StackActions } from "@react-navigation/core";
-
-import type { RootType, RootStackParamList } from "../Types/NavigatorTypes";
+import type { RootType, RootStackParamList } from "types/NavigatorTypes";
 
 export const navigationRef = createRef<any>();
 

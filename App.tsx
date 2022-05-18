@@ -1,5 +1,3 @@
-/* eslint-disable import/no-default-export */
-
 import React from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import AppNavigator from "navigations/AppNavigator";
