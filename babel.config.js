@@ -11,6 +11,7 @@ module.exports = {
           assets: "./src/assets",
           navigations: "./src/navigations",
           types: "./src/types",
+          utils: "./src/utils",
         },
       },
     ],

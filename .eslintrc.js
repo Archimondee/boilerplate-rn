@@ -26,7 +26,7 @@ module.exports = {
       },
     ],
     "import/order": [
-      "error",
+      "off",
       {
         pathGroups: [
           {

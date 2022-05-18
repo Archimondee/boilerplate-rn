@@ -1,5 +1,7 @@
 export type RootStackParamList = {
-  LoginScreen: {};
+  LoginScreen: undefined;
+  MainNavigator: undefined;
+  RegisterScreen: undefined;
 };
 
-export type RootType = "LoginScreen";
+export type RootType = "LoginScreen" | "RegisterScreen";

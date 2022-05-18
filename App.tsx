@@ -1,23 +1,14 @@
 /* eslint-disable import/no-default-export */
 
 import React from "react";
-import { SafeAreaView, StatusBar, useColorScheme, Text } from "react-native";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+import AppNavigator from "navigations/AppNavigator";
 
 const App = () => {
-  const isDarkMode = useColorScheme() === "dark";
-
   return (
-    <SafeAreaView
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <StatusBar barStyle={isDarkMode ? "light-content" : "dark-content"} />
-      <Text>Hellooo</Text>
-    </SafeAreaView>
+    <SafeAreaProvider>
+      <AppNavigator />
+    </SafeAreaProvider>
   );
 };
 

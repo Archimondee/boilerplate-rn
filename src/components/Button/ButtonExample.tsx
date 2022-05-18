@@ -1,14 +1,15 @@
 import * as React from "react";
-import { Text, View, TouchableOpacity } from "react-native";
-import styles from "./ButtonExampleStyles";
+import { Text, TouchableOpacity } from "react-native";
 
 interface ButtonExampleProps {
   title: string;
+  onPress: () => void;
 }
 
 const ButtonExample = (props: ButtonExampleProps) => {
   return (
     <TouchableOpacity
+      onPress={props.onPress}
       style={{
         backgroundColor: "red",
         paddingHorizontal: 20,
