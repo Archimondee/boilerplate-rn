@@ -16,7 +16,9 @@
       "assets/*": ["src/assets/*"],
       "navigations/*": ["src/navigations/*"],
       "types/*": ["src/types/*"],
-      "utils/*": ["src/utils/*"]
+      "utils/*": ["src/utils/*"],
+      "stores/*": ["src/stores/*"],
+      "hooks/*": ["src/hooks/*"]
     },
     "jsx": "react-native",
     "strict": true,

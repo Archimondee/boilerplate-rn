@@ -12,6 +12,8 @@ module.exports = {
           navigations: "./src/navigations",
           types: "./src/types",
           utils: "./src/utils",
+          stores: "./src/stores",
+          hooks: "./src/hooks",
         },
       },
     ],
