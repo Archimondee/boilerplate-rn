@@ -14,6 +14,7 @@ module.exports = {
           utils: "./src/utils",
           stores: "./src/stores",
           hooks: "./src/hooks",
+          configs: "./src/configs",
         },
       },
     ],
