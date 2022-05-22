@@ -1,3 +1,4 @@
+import ExampleSkeleton from "assets/skeleton/ExampleSkeleton";
 import ButtonExample from "components/Button/ButtonExample";
 import React, { useState } from "react";
 import { Text, TextInput, View, Alert } from "react-native";
@@ -86,6 +87,9 @@ const RegisterScreen = () => {
         <Text>{lastnameErr}</Text>
       </View>
       <ButtonExample title="Submit" onPress={example} />
+      <View style={{ paddingTop: 30 }}>
+        <ExampleSkeleton />
+      </View>
     </View>
   );
 };
