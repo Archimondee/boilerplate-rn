@@ -5,6 +5,7 @@ import NavigationService from "utils/NavigationService";
 import Config from "react-native-config";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
+import moment from "moment";
 
 import { useTestData } from "../../hooks";
 import { getDataTest } from "../../store/user/actions";
@@ -25,6 +26,8 @@ const LoginScreen = () => {
         onPress={() => NavigationService.navigate("RegisterScreen")}
       />
       <Text>Status : {Config.STATUS}</Text>
+
+      <Text>Today : {moment().format("MMMM Do YYYY, h:mm:ss a")}</Text>
 
       <Text>Data Test </Text>
       <Text>CODE : {testData.data?.bpi.EUR.code}</Text>

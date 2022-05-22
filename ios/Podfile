@@ -12,9 +12,6 @@ target 'boilerplate' do
     'Release' => '$(PODS_ROOT)/../../.env.production',
     'Staging' => '$(PODS_ROOT)/../../.env.staging'
   }
-  
-  pod 'react-native-config', :path => '../node_modules/react-native-config'
-  pod 'react-native-config/Extension', :path => '../node_modules/react-native-config'
 
   # Flags change depending on the env values.
   flags = get_default_flags()

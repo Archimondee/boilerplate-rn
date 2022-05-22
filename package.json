@@ -23,6 +23,7 @@
     "logcat": "adb -s emulator-5554 logcat | grep \"NODEJS-MOBILE\\|NODEJS-RN\\|AndroidRuntime\\|ReactNative\""
   },
   "dependencies": {
+    "@react-native-async-storage/async-storage": "^1.17.5",
     "@react-navigation/bottom-tabs": "^6.3.1",
     "@react-navigation/core": "^6.2.1",
     "@react-navigation/material-top-tabs": "^6.2.1",
@@ -30,6 +31,7 @@
     "@react-navigation/stack": "^6.2.1",
     "axios": "^0.27.2",
     "babel-plugin-module-resolver": "^4.1.0",
+    "moment": "^2.29.3",
     "react": "17.0.2",
     "react-native": "0.68.2",
     "react-native-config": "^1.4.5",
@@ -41,7 +43,8 @@
     "redux": "^4.2.0",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.4.1",
-    "redux-tools": "^3.2.0"
+    "redux-tools": "^3.2.0",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
@@ -52,6 +55,7 @@
     "@types/react-redux": "^7.1.24",
     "@types/react-test-renderer": "^17.0.1",
     "@types/redux-logger": "^3.0.9",
+    "@types/yup": "^0.29.14",
     "@typescript-eslint/eslint-plugin": "^5.17.0",
     "@typescript-eslint/parser": "^5.17.0",
     "babel-jest": "^26.6.3",
