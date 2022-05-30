@@ -78,8 +78,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install zip
-          cd android/app/build/outputs/apk/release
-          zip -r archive.zip . -i app-release.apk
+          zip -r archive.zip . -i android/app/build/outputs/apk/release/app-release.apk
 
       - name: Upload to gdrive
         uses: adityak74/google-drive-upload-git-action@main
