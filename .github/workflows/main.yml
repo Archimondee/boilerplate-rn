@@ -84,6 +84,6 @@ jobs:
       - name: Upload to gdrive
         uses: adityak74/google-drive-upload-git-action@main
         with:
-          credentials: ${{ secrets.credentials }}
+          credentials: ${{ secrets.CREDENTIALS }}
           filename: "archive.zip"
-          folderId: ${{ secrets.folderId }}
+          folderId: ${{ secrets.FOLDERID }}
