@@ -73,3 +73,17 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/')
         with:
           files: android/app/build/outputs/apk/release/app-release.apk
+      
+      - name: Archive files
+        run: |
+          sudo apt-get update
+          sudo apt-get install zip
+          cd android/app/build/outputs/apk/release
+          zip -r archive.zip . -i app-release.apk
+
+      - name: Upload to gdrive
+        uses: adityak74/google-drive-upload-git-action@main
+        with:
+          credentials: ${{ secrets.credentials }}
+          filename: "archive.zip"
+          folderId: ${{ secrets.folderId }}
