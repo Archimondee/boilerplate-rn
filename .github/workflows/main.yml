@@ -5,8 +5,6 @@ name: Build Android APK
 # Controls when the workflow will run
 on:
   push:
-    branches:
-      - master
     tags:
       - "v*.*.*"
 
@@ -26,12 +24,40 @@ jobs:
         with:
           distribution: 'zulu' # See 'Supported distributions' for available options
           java-version: '11.0.4'
+          
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+        
+      - name: Restore node_modules from cache
+        uses: actions/cache@v2
+        id: yarn-cache
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
       # Runs a single command using the runners shell
       - name: Install npm dependencies
         run: yarn
         
-      - name: Clean android build
-        run: cd android && ./gradlew clean && cd ..
+      #- name: Clean android build
+        #run: cd android && ./gradlew clean && cd ..
+        
+      - name: Cache Gradle Wrapper
+        uses: actions/cache@v2
+        with:
+          path: ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-wrapper-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
+      - name: Cache Gradle Dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-caches-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-caches-
+      - name: Make Gradlew Executable
+        run: cd android && chmod +x ./gradlew
         
       - name: Build Android Release Dev
         run: cd android && ENVFILE=.env.development && ./gradlew assembleRelease
