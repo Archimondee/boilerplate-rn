@@ -4,9 +4,25 @@ name: Build Android APK
 
 # Controls when the workflow will run
 on:
-  push:
-    tags:
-      - "v*.*.*"
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'     
+        required: true
+        default: 'warning' 
+        type: choice
+        options:
+        - info
+        - warning
+        - debug 
+      tags:
+        description: 'Test scenario tags'
+        required: false 
+        type: boolean
+      environment:
+        description: 'Environment to run tests against'
+        type: environment
+        required: true 
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -55,7 +71,6 @@ jobs:
           mv android/app/build/outputs/apk/release/app-release.apk .
           zip -r archive.zip app-release.apk
           rm app-release.apk
-
       - name: Upload to gdrive
         uses: adityak74/google-drive-upload-git-action@main
         with:
