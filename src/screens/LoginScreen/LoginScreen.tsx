@@ -28,7 +28,7 @@ const LoginScreen = () => {
       <Text>Status : {Config.STATUS}</Text>
 
       <Text>Today : {moment().format("MMMM Do YYYY, h:mm:ss a")}</Text>
-      <Text>From branch staging</Text>
+      <Text>From branch master</Text>
 
       <Text>Data Test </Text>
       <Text>CODE : {testData.data?.bpi.EUR.code}</Text>
