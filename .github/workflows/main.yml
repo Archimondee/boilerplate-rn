@@ -3,6 +3,8 @@ name: Build Android APK
   # .github/workflows/main.yml
 on:
   push:
+    branches:
+      - master
     tags:
       - "v*.*.*"
 jobs:
