@@ -9,7 +9,7 @@
     "test": "jest",
     "lint": "tsc && eslint . --ext .js,.jsx,.ts,.tsx --cache",
     "run-dev:android:windows": "SET ENVFILE=.env.development && react-native run-android --deviceId=emulator-5554",
-    "run-dev:android:mac": "ENVFILE=.env.development react-native run-android --deviceId=emulator-5554",
+    "run-dev:android:mac": "ENVFILE=.env.development react-native run-android",
     "run-dev:ios:mac": "ENVFILE=.env.development react-native run-ios",
     "run-staging:ios:mac": "ENVFILE=.env.staging react-native run-ios",
     "run-production:ios:mac": "ENVFILE=.env.production react-native run-ios",
