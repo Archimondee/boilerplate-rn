@@ -6,24 +6,19 @@ name: Build Android APK
 on:
   workflow_dispatch:
     inputs:
-      logLevel:
-        description: 'Log level'     
+      branches:
+        description: 'Write branch you want to build'
         required: true
-        default: 'warning' 
-        type: choice
-        options:
-        - info
-        - warning
-        - debug 
-      tags:
-        description: 'Test scenario tags'
-        required: false 
-        type: boolean
+        type: string
       environment:
-        description: 'Environment to run tests against'
-        type: environment
-        required: true 
-
+        description: 'Choose environment you want to build'
+        required: true
+        options:
+          - staging
+          - development
+          - production
+        type: choice
+        default: 'development'
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
@@ -50,7 +45,7 @@ jobs:
         run: cd android && ./gradlew clean && cd ..
 
       - name: Build Android Release Dev
-        run: cd android && ENVFILE=.env.development && ./gradlew assembleRelease
+        run: cd android && ENVFILE=.env.${{ github.event.inputs.environment }} && ./gradlew assembleRelease
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v1
@@ -63,19 +58,15 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/')
         with:
           files: android/app/build/outputs/apk/release/app-release.apk
-      
       - name: Archive files
         run: |
-          sudo apt-get update
-          sudo apt-get install zip
           mv android/app/build/outputs/apk/release/app-release.apk .
-          zip -r archive.zip app-release.apk
           rm app-release.apk
       - name: Upload to gdrive
         uses: adityak74/google-drive-upload-git-action@main
         with:
           credentials: ${{ secrets.CREDENTIALS }}
-          filename: "archive.zip"
+          filename: "app-release.apk"
           folderId: ${{ secrets.FOLDERID }}
-          name: "${{ env.TAG }}.zip" # optional string
+          name: "${{ github.event.inputs.environment }}-${{ github.event.inputs.branches }}.apk" # optional string
           overwrite: "true" # optional boolean
