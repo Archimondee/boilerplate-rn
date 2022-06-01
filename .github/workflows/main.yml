@@ -35,14 +35,17 @@ jobs:
         run: |
           if [ ${{ github.event.inputs.environment }} == 'development' ]; then
               echo "Build APK with development environment"
-              echo "assemble=assembleDebug apk=app-debug" >> $GITHUB_ENV
+              echo "assemble=assembleDebug" >> $GITHUB_ENV
+              echo "apk=app-debug" >> $GITHUB_ENV
             
           elif [ ${{ github.event.inputs.environment }} == 'production' ]; then
               echo "Build APK with production environment"
-              echo "assemble=assembleRelease apk=app-release" >> $GITHUB_ENV
+              echo "assemble=assembleRelease" >> $GITHUB_ENV
+              echo "apk=app-release" >> $GITHUB_ENV
           else
               echo "Build APK with staging environment"
-              echo "assemble=assembleRelease apk=app-release" >> $GITHUB_ENV
+              echo "assemble=assembleRelease" >> $GITHUB_ENV
+              echo "apk=app-release" >> $GITHUB_ENV
           fi
         shell: bash
       - name: Read exported variable
