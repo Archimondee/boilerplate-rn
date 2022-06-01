@@ -37,7 +37,7 @@ jobs:
               echo "Build APK with development environment"
               echo "assemble=assembleDebug apk=app-debug" >> $GITHUB_ENV
             
-          else if [ ${{ github.event.inputs.environment }} == 'production' ]; then
+          elif [ ${{ github.event.inputs.environment }} == 'production' ]; then
               echo "Build APK with production environment"
               echo "assemble=assembleRelease apk=app-release" >> $GITHUB_ENV
           else
