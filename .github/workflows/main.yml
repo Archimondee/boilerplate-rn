@@ -84,6 +84,8 @@ jobs:
           with:
             path: ./*
             key: ${{ github.sha }}
+        - name: Checking Lint
+          run: tsc && eslint . --ext .js,.jsx,.ts,.tsx --cache
   Build:
     runs-on: ubuntu-latest
     name: Building APK
