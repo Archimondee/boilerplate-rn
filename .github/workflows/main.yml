@@ -33,7 +33,7 @@ jobs:
       - name: Set Test Variable
         id: set-variable
         run: |
-          if [ ${{ github.event.inputs.environment }} == 'development ]; then
+          if [ ${{ github.event.inputs.environment }} == 'development' ]; then
               echo "Build APK with development environment"
               echo "assemble=assembleDebug apk=app-debug" >> $GITHUB_ENV
             
