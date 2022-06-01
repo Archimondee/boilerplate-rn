@@ -85,12 +85,17 @@ jobs:
           files: android/app/build/outputs/apk/${{env.folder}}/${{env.apk}}.apk
       - name: Archive files
         run: |
+          sudo apt-get update
+          sudo apt-get install zip
           mv android/app/build/outputs/apk/${{env.folder}}/${{env.apk}}.apk .
+          zip -r archive.zip ${{env.apk}}.apk
+          rm ${{env.apk}}.apk
+          
       - name: Upload to gdrive
         uses: adityak74/google-drive-upload-git-action@main
         with:
           credentials: ${{ secrets.CREDENTIALS }}
-          filename: "${{env.apk}}.apk"
+          filename: "archive.zip"
           folderId: ${{ secrets.FOLDERID }}
           name: "${{ github.event.inputs.environment }}-${{ github.event.inputs.branches }}.apk" # optional string
           overwrite: "true" # optional boolean
