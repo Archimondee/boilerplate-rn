@@ -43,6 +43,7 @@ buck-out/
 !debug.keystore
 
 .eslintcache
+.github/workflows/main.yml
 
 # fastlane
 #
