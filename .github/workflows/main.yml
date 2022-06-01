@@ -55,7 +55,7 @@ jobs:
         run: |
           echo "ENV: ${{ env.assemble }}"
           echo "APK: ${{ env.apk }}.apk"
-          echo "Folder: ${{ env.folder }}.apk"
+          echo "Folder: ${{ env.folder }}"
           
       - name: Download Java SDK 11
         uses: actions/setup-java@v3
