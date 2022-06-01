@@ -21,12 +21,9 @@ on:
         default: 'development'
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  Build:
-    # The type of runner that the job will run on
+  Setting:
+    name: Setting Environment
     runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
@@ -65,40 +62,45 @@ jobs:
       # Runs a single command using the runners shell
       - name: Install npm dependencies
         run: yarn
+  Build:
+    runs-on: ubuntu-latest
+    name: Building APK
+    needs: Setting
+    steps:
+        - name: Clean android build
+          run: cd android && ./gradlew clean && cd ..
 
-      - name: Clean android build
-        run: cd android && ./gradlew clean && cd ..
+        - name: Build Android Release Dev
+          run: cd android && ENVFILE=.env.${{ github.event.inputs.environment }} && ./gradlew ${{env.assemble}}
 
-      - name: Build Android Release Dev
-        run: cd android && ENVFILE=.env.${{ github.event.inputs.environment }} && ./gradlew ${{env.assemble}}
-
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v1
-        with:
-          name: BoilerPlate
-          path: android/app/build/outputs/apk/${{env.folder}}/${{env.apk}}.apk
-
-      - name: Release github
-        uses: softprops/action-gh-release@v1
-        if: startsWith(github.ref, 'refs/tags/')
-        with:
-          files: android/app/build/outputs/apk/${{env.folder}}/${{env.apk}}.apk
-      - name: Archive files
-        run: |
-          sudo apt-get update
-          sudo apt-get install zip
-          mv android/app/build/outputs/apk/${{env.folder}}/${{env.apk}}.apk .
-          zip -r archive.zip ${{env.apk}}.apk
-          rm ${{env.apk}}.apk
+        - name: Upload Artifact
+          uses: actions/upload-artifact@v1
+          with:
+            name: BoilerPlate
+            path: android/app/build/outputs/apk/${{env.folder}}/${{env.apk}}.apk
+  Upload:
+    name: Upload to Google Drive
+    needs: Build
+    runs-on: ubuntu-latest
+    steps:
+        - name: Release github
+          uses: softprops/action-gh-release@v1
+          if: startsWith(github.ref, 'refs/tags/')
+          with:
+            files: android/app/build/outputs/apk/${{env.folder}}/${{env.apk}}.apk
+        - name: Archive files
+          run: |
+            sudo apt-get update
+            sudo apt-get install zip
+            mv android/app/build/outputs/apk/${{env.folder}}/${{env.apk}}.apk .
+            zip -r archive.zip ${{env.apk}}.apk
+            rm ${{env.apk}}.apk
           
-      - name: Upload to gdrive
-        uses: adityak74/google-drive-upload-git-action@main
-        with:
-          credentials: ${{ secrets.CREDENTIALS }}
-          filename: "archive.zip"
-          folderId: ${{ secrets.FOLDERID }}
-          name: "${{ github.event.inputs.environment }}-${{ github.event.inputs.branches }}.apk" # optional string
-          overwrite: "true" # optional boolean
-          
-      
-      
+        - name: Upload to gdrive
+          uses: adityak74/google-drive-upload-git-action@main
+          with:
+            credentials: ${{ secrets.CREDENTIALS }}
+            filename: "archive.zip"
+            folderId: ${{ secrets.FOLDERID }}
+            name: "${{ github.event.inputs.environment }}-${{ github.event.inputs.branches }}.apk" # optional string
+            overwrite: "true" # optional boolean
