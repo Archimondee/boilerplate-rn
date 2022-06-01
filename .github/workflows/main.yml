@@ -62,13 +62,24 @@ jobs:
       # Runs a single command using the runners shell
       - name: Install npm dependencies
         run: yarn
+      - uses: actions/cache@v2
+        id: restore-build
+        with:
+          path: ./*
+          key: ${{ github.sha }}
   Build:
     runs-on: ubuntu-latest
     name: Building APK
-    needs: Setting
+    needs: [Setting]
     
     steps:
         - uses: actions/checkout@v3
+        
+        - uses: actions/cache@v2
+          id: restore-build
+          with:
+            path: ./*
+            key: ${{ github.sha }}
       
         - name: Clean android build
           run: cd android && ./gradlew clean && cd ..
@@ -83,7 +94,7 @@ jobs:
             path: android/app/build/outputs/apk/${{env.folder}}/${{env.apk}}.apk
   Upload:
     name: Upload to Google Drive
-    needs: Build
+    needs: [Build]
     runs-on: ubuntu-latest
     steps:
         - uses: actions/checkout@v3
