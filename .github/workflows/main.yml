@@ -109,8 +109,9 @@ jobs:
         - name: Upload Artifact
           uses: actions/upload-artifact@v1
           with:
-            name: BoilerPlate
+            name: boilerplate
             path: android/app/build/outputs/apk/${{needs.Setting.outputs.folder}}/${{needs.Setting.outputs.apk}}.apk
+            retention-days: 1
   Upload:
     name: Upload to Google Drive
     needs: [Setting, Check, Build]
@@ -124,11 +125,12 @@ jobs:
             path: ./*
             key: ${{ github.sha }}
         
-        - name: Release github
-          uses: softprops/action-gh-release@v1
-          if: startsWith(github.ref, 'refs/tags/')
+        - name: Retrieve saved APK File
+          uses: actions/download-artifact@v2
           with:
-            files: android/app/build/outputs/apk/${{needs.Setting.outputs.folder}}/${{needs.Setting.outputs.apk}}.apk
+            name: boilerplate
+            path: android/app/build/outputs/apk/${{needs.Setting.outputs.folder}}
+          
         - name: Archive files
           run: |
             sudo apt-get update
