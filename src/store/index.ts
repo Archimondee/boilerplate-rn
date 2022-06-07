@@ -1,9 +1,11 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-import { createStore, combineReducers, applyMiddleware, compose } from "redux";
+import { createStore, combineReducers, applyMiddleware } from "redux";
+import { persistReducer as pReducer, persistStore } from "redux-persist";
 import thunk from "redux-thunk";
+import logger from "redux-logger";
 
 import { userReducer } from "./user/reducers";
 import type { UserState } from "./user/types";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export interface StoreStateType {
   user: UserState;
@@ -15,16 +17,14 @@ const rootReducer = combineReducers({
 
 export type AppState = ReturnType<typeof rootReducer>;
 
-const middlewares = [thunk];
+const persistConfig = {
+  key: "root",
+  storage: AsyncStorage,
+  whitelist: ["persist"], // select reducer to persist
+};
+const persistedReducer = pReducer(persistConfig, rootReducer);
 
-if (process.env.NODE_ENV === "development") {
-  const { logger } = require("redux-logger");
+const store = createStore(persistedReducer, applyMiddleware(thunk, logger));
+const persistor = persistStore(store);
 
-  middlewares.push(logger);
-}
-
-export default function configureStore() {
-  const enhancer = compose(applyMiddleware(...middlewares));
-  const store = createStore(rootReducer, enhancer);
-  return store;
-}
+export { store, persistor };
